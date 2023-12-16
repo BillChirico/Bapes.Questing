@@ -1,3 +1,5 @@
+local GMR = GMR
+
 local function DefineVendors(location)
     if (location == "Valley of Trials") then
         GMR.DefineSellVendor(-565.4, -4214.1, 41.5, 3158)
@@ -7,7 +9,7 @@ local function DefineVendors(location)
     end
 end
 
-GMR.DefineQuester("Phase 1", function()
+GMR.DefineQuester("Valley of Trials 1", function()
     GMR.DefineQuest({
         QuestName = "Your Place In The World",
         QuestID = 4641,
@@ -19,6 +21,7 @@ GMR.DefineQuester("Phase 1", function()
             DefineVendors("Valley of Trials")
         end
     })
+
     GMR.DefineQuest({
         QuestName = "Cutting Teeth",
         QuestID = 788,
@@ -95,6 +98,102 @@ GMR.DefineQuester("Phase 1", function()
             DefineVendors("Valley of Trials")
         end
     })
+
+    GMR.DefineQuest({
+        QuestName = "Sting of Scorpid",
+        QuestID = 789,
+        QuestType = "Grinding",
+        Faction = "Horde",
+        PickUp = {x = -600.1, y = -4186.1, z = 41, id = 3143},
+        TurnIn = {x = -600.1, y = -4186.1, z = 41, id = 3143},
+        Profile = function()
+            GMR.DefineProfileName("Sting of Scorpid")
+            GMR.DefineProfileType("Grinding")
+            GMR.DefineProfileContinent("Kalimdor")
+            GMR.DefineProfileCenter(-603.84405517578, -4199.2900390625, 41.017402648926, 150)
+            GMR.DefineProfileCenter(-593.62921142578, -4225.0390625, 38.232120513916, 150)
+            GMR.DefineProfileCenter(-577.41314697266, -4255.1850585938, 37.984756469727, 150)
+            GMR.DefineProfileCenter(-565.25506591797, -4282.1069335938, 37.864597320557, 150)
+            GMR.DefineProfileCenter(-557.29730224609, -4303.5229492188, 37.393440246582, 150)
+            GMR.DefineProfileCenter(-522.53509521484, -4293.0185546875, 38.323127746582, 150)
+            GMR.DefineProfileCenter(-489.95275878906, -4260.7631835938, 44.988834381104, 150)
+            GMR.DefineProfileCenter(-456.51135253906, -4244.7124023438, 49.954116821289, 150)
+            GMR.DefineProfileCenter(-415.81188964844, -4218.1181640625, 54.390689849854, 150)
+            GMR.DefineProfileCenter(-405.4674987793, -4169.1181640625, 51.295700073242, 150)
+            GMR.DefineProfileCenter(-366.80877685547, -4160.8837890625, 52.683601379395, 150)
+            GMR.DefineProfileCenter(-315.53973388672, -4157.1005859375, 53.238998413086, 150)
+            GMR.DefineProfileCenter(-337.55715942383, -4114.0830078125, 49.716316223145, 150)
+            GMR.DefineProfileCenter(-376.16110229492, -4071.3503417969, 49.258659362793, 150)
+            GMR.DefineProfileCenter(-386.51751708984, -4121.7553710938, 50.371932983398, 150)
+            GMR.DefineProfileCenter(-448.37460327148, -4132.1108398438, 51.264289855957, 150)
+            GMR.DefineProfileCenter(-423.22787475586, -4063.9880371094, 49.939113616943, 150)
+            GMR.DefineProfileCenter(-470.08895874023, -4153.8115234375, 50.763088226318, 150)
+            GMR.DefineProfileCenter(-476.83636474609, -4203.2075195312, 50.405143737793, 150)
+            GMR.DefineProfileCenter(-498.49035644531, -4252.8286132812, 44.276817321777, 150)
+            GMR.DefineProfileCenter(-541.16717529297, -4279.1479492188, 39.212448120117, 150)
+            GMR.DefineProfileCenter(-583.48431396484, -4259.9599609375, 37.827247619629, 150)
+            GMR.DefineProfileCenter(-606.19781494141, -4206.966796875, 38.347694396973, 150)
+            DefineVendors("Valley of Trials")
+        end
+    })
+
+    -- Warrior Only
+    GMR.DefineQuest({
+        QuestName = "Simple Parchment",
+        QuestID = 2383,
+        QuestType = "Grinding",
+        Faction = "Horde",
+        Class = "Warrior",
+        PickUp = {x = -600.1, y = -4186.1, z = 41, id = 3143},
+        TurnIn = { x = -639.3, y = -4230.1, z = 38.1, id = 3153},
+        Profile = function()
+            DefineVendors("Valley of Trials")
+        end
+    })
+
+    GMR.DefineQuest({
+        QuestName = "|cFFFFAB48 Cactus Apple Surprise |r",
+        QuestID = 4402,
+        QuestType = "Custom",
+        PickUp = { x = -561.62847900391, y = -4221.798828125, z = 41.590507507324, id = 9796 },
+        TurnIn = { x = -561.62847900391, y = -4221.798828125, z = 41.590507507324, id = 9796 },
+        Race = { "Orc", "Troll" },
+        PreQuest = 999999999999,
+        Lua = [[
+            if not GMR.Questing.IsObjectiveCompleted(4402, 1) then
+                GMR.SetQuestingState(nil);
+                local npc = GMR.GetObjectWithInfo({ id = 27410, isAlive = true, canAttack = true })
+                local object = GMR.GetObjectWithInfo({ id = 171938, rawType = 8, isInteractable = true })
+                local x, y, z = GMR.ObjectPosition(object)
+                if object then
+                    if not GMR.IsPlayerPosition(x, y, z, 5) then
+                        GMR.Mesh(x, y, z)
+                    elseif GMR.IsMoving() then 
+                        GMR.StopMoving()
+                    else
+                        if not GMR.GetDelay("CustomQuest") then
+                            GMR.Questing.InteractWith(object, nil, nil, nil, nil, 5); GMR.SetDelay("CustomQuest", 1)
+                        end
+                    end
+                else
+                    GMR.SetQuestingState("Idle")
+                end
+            end
+        ]],
+        Profile = {
+            'GMR.SkipTurnIn(false)',
+            'GMR.DefineProfileCenter(-557.399841, -4289.202637, 37.470306, 50)',
+            'GMR.DefineProfileCenter(-487.868225, -4291.974121, 43.158340, 50)',
+            'GMR.DefineProfileCenter(-406.954803, -4280.130859, 45.829395, 50)',
+            'GMR.DefineProfileCenter(-299.333038, -4332.531250, 55.674145, 50)',
+            'GMR.DefineProfileCenter(-325.371155, -4394.829102, 58.277267, 50)',
+            'GMR.DefineProfileCenter(-489.205078, -4462.878906, 51.504410, 50)',
+            'GMR.DefineSettings("Disable", { "Grinding" }); GMR.DefineSettings("Enable", { "CustomObjects" })',
+            -- Orc/Troll Starting Area Vendors
+            DefineVendors("Valley of Trials")
+        }
+    })
+
 end)
 
-GMR.LoadQuester("Phase 1")
+GMR.LoadQuester("Valley of Trials 1")
