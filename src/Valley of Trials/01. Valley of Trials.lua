@@ -8,7 +8,6 @@ local function DefineVendors(location)
 end
 
 GMR.DefineQuester("Phase 1", function()
-    GMR.Print("1")
     GMR.DefineQuest({
         QuestName = "Your Place In The World",
         QuestID = 4641,
@@ -20,7 +19,6 @@ GMR.DefineQuester("Phase 1", function()
             DefineVendors("Valley of Trials")
         end
     })
-    GMR.Print("2")
     GMR.DefineQuest({
         QuestName = "Cutting Teeth",
         QuestID = 788,
@@ -97,9 +95,6 @@ GMR.DefineQuester("Phase 1", function()
             DefineVendors("Valley of Trials")
         end
     })
-    GMR.Print("3")
 end)
 
-GMR.Print("A")
 GMR.LoadQuester("Phase 1")
-GMR.Print("B")

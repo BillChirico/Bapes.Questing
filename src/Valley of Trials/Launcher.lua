@@ -1,1 +1,0 @@
-GMR.LaunchQuester(true)
